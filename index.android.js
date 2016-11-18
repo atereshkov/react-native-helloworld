@@ -8,46 +8,44 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
+  Text, DrawerLayoutAndroid, TouchableHighlight,
   View
 } from 'react-native';
 
-export default class HelloProject extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+var ImagePicker = require('NativeModules').ImagePicker;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+var HelloProject = React.createClass({
+    openDrawer:function() {
+        this.refs['DRAWER'].openDrawer()
+
+        ImagePicker.openSelectDialog(
+            {}, // no config yet
+            (uri) => { console.log(uri) },
+            (error) => { console.log(error) }
+        )
+    },
+    render: function() {
+        var navigationView = (
+            <View style={{flex: 1, backgroundColor: '#fff'}}>
+              <Text>{'Im in the drawer'}</Text>
+            </View>
+        );
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                ref={'DRAWER'}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                renderNavigationView={() => navigationView}>
+              <View style={{flex: 1, alignItems: 'center'}}>
+                <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
+                <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
+                <TouchableHighlight onPress={this.openDrawer}>
+                  <Text>{'Open Drawer / Open Select Dialog'}</Text>
+                </TouchableHighlight>
+              </View>
+            </DrawerLayoutAndroid>
+        );
+    }
 });
 
 AppRegistry.registerComponent('HelloProject', () => HelloProject);

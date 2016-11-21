@@ -8,7 +8,11 @@
   },
   "dependencies": {
     "react": "15.3.2",
-    "react-native": "0.37.0"
+    "react-native": "0.37.0",
+	"moment": "^2.15.1",
+    "react-dom": "15.3.2",
+    "react-native-material-design-styles": "^0.2.6",
+    "react-native-web": "0.0.44"
   },
   "jest": {
     "preset": "jest-react-native"
